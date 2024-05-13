@@ -22,13 +22,23 @@ To get started with the MultiStepForm Generator, follow these steps:
 Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/multistepform-generator.git
-cd multistepform-generator
+git clone https://github.com/XamHans/formulateflow
+cd formulateflow
+```
 
+Create the .env file:
+
+```
+OPENAI_API_KEY=""
+ASSISTANT_ID=""
+```
+
+Enter your API key and your assistant that is responsible for generatin the code
 
 ## Acknowledgments
 
 Special thanks to the [twitterbio](https://github.com/Nutlope/twitterbio) project which served as an inspiration and starting point for our MultiStepForm Generator.
 
+```
 
 ```
