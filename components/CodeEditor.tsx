@@ -1,67 +1,82 @@
-"use client";
-
-import { useMonaco } from "@monaco-editor/react";
-import React, { useEffect, useRef, useState } from "react";
+import Editor, { useMonaco } from "@monaco-editor/react";
+import React, { useState } from "react";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../@/components/ui/tabs";
 
 export interface EditorInstance {
   id: number;
-  label: string;
+  name: string; // Changed label to name
   content: string;
 }
 
-export interface MonacoEditorWithTabsProps {
-  generatedFormCode: EditorInstance[];
-}
+// export interface MonacoEditorWithTabsProps {
+//   generatedFormCode: EditorInstance[];
+// }
 
-const MonacoEditorWithTabs: React.FC<MonacoEditorWithTabsProps> = ({
-  generatedFormCode,
-}) => {
+const MonacoEditorWithTabs: React.FC = () => {
   const monaco = useMonaco();
-  const [editorInstances, setEditorInstances] = useState();
+  const [editorInstances, setEditorInstances] = useState([
+    {
+      id: 0,
+      label: "store.ts",
+      content:
+        "import { create } from 'zustand';\n\ninterface Onboa…tStep: (step) => set({ currentStep: step }),\n}));",
+    },
 
-  const containerRefs = useRef([]);
-  containerRefs.current = editorInstances?.map(() => React.createRef());
+    {
+      id: 1,
+      label: "WizardWrapper.tsx",
+      content:
+        "import React from 'react';\nimport { useOnboardingS…rStep()}</div>;\n};\n\nexport default WizardWrapper;",
+    },
 
-  useEffect(() => {
-    console.log("editorInstances changed", editorInstances);
-    editorInstances?.forEach((instance, index) => {
-      if (!instance.editor) {
-        const newEditor = monaco?.editor.create(
-          containerRefs.current[index].current,
-          {
-            value: instance.content,
-            language: "markdown",
-            theme: "vs-dark",
-            scrollBeyondLastLine: false,
-            automaticLayout: true,
-          }
-        );
+    {
+      id: 2,
+      label: "WizardPage.tsx",
+      content:
+        "import React from 'react';\nimport { useForm } from…>\n    </form>\n  );\n};\n\nexport default WizardPage;",
+    },
+    {
+      id: 3,
+      label: "WizardPage.tsx",
+      content:
+        "import React from 'react';\nimport { useForm } from…>\n    </form>\n  );\n};\n\nexport default WizardPage;",
+    },
+  ]);
 
-        setEditorInstances((prevInstances) => {
-          const newInstances = [...prevInstances];
-          newInstances[index] = { ...instance, editor: newEditor };
-          return newInstances;
-        });
-      }
-    });
-  }, [monaco, editorInstances]);
-
-  useEffect(() => {
-    setEditorInstances(generatedFormCode);
-  }, [generatedFormCode]);
+  // useEffect(() => {
+  //   setEditorInstances(generatedFormCode);
+  // }, [generatedFormCode]);
 
   return (
     <div className="w-full">
-      {editorInstances?.map((instance, index) => (
-        <div className="mt-2 mb-2" key={instance.id}>
-          <div>{instance.label}</div>
-          <div
-            className="max-h-96 overflow-y-auto space-y-10 my-10"
-            ref={containerRefs.current[index]}
-            style={{ height: "250px", width: "100%" }}
-          />
-        </div>
-      ))}
+      <Tabs defaultValue={editorInstances?.[0]?.label} className="w-full">
+        <TabsList className=" w-full  flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 bg-white ">
+          {editorInstances?.map((instance) => (
+            <TabsTrigger key={instance.id} value={instance.label}>
+              {instance.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {editorInstances?.map((instance, index) => (
+          <TabsContent
+            key={instance.id}
+            value={instance.label}
+            className="w-full h-96"
+          >
+            <Editor
+              className="w-full h-96"
+              defaultLanguage="jsx"
+              theme="vs-dark"
+              defaultValue={instance.content}
+            />
+          </TabsContent>
+        ))}
+      </Tabs>
     </div>
   );
 };

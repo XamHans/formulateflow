@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
-import { Toaster } from "react-hot-toast";
 import MonacoEditorWithTabs, { EditorInstance } from "../components/CodeEditor";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -23,7 +22,7 @@ const Home: NextPage = () => {
 
     setLoading(true);
 
-    const response = await fetch("/api/openai", {
+    const response = await fetch("/api/claude", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +36,7 @@ const Home: NextPage = () => {
       throw new Error(response.statusText);
     }
 
-    const { generatedCode } = await response.json();
+    const generatedCode = await response.json();
 
     setGeneratedFormCode(generatedCode);
     setLoading(false);
@@ -101,13 +100,11 @@ const Home: NextPage = () => {
             </button>
           )}
         </div>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          toastOptions={{ duration: 2000 }}
-        />
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
-        <MonacoEditorWithTabs generatedFormCode={generatedFormCode} />
+
+        <div className="py-2 mt-8 flex space-y-4 w-full">
+          <MonacoEditorWithTabs />
+        </div>
       </main>
       <Footer />
     </div>
