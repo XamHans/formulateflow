@@ -1,4 +1,4 @@
-import Editor, { useMonaco } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import React, { useEffect, useState } from "react";
 import {
   Tabs,
@@ -9,7 +9,7 @@ import {
 
 export interface EditorInstance {
   id: number;
-  name: string; // Changed label to name
+  label: string;
   content: string;
 }
 
@@ -20,8 +20,7 @@ export interface MonacoEditorWithTabsProps {
 const MonacoEditorWithTabs: React.FC<MonacoEditorWithTabsProps> = ({
   generatedFormCode,
 }) => {
-  const monaco = useMonaco();
-  const [editorInstances, setEditorInstances] = useState([]);
+  const [editorInstances, setEditorInstances] = useState<EditorInstance[]>([]);
 
   useEffect(() => {
     setEditorInstances(generatedFormCode);

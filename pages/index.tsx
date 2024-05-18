@@ -13,11 +13,11 @@ const Home: NextPage = () => {
     []
   );
 
-  const [userInput, setUserInput] = useState<String>(
+  const [userInput, setUserInput] = useState(
     "Create me a form that captures users firstname, lastname and email. On the second page capture the email and profession."
   );
 
-  const [userClaudeApiKey, setUserClaudeApiKey] = useState<String>("");
+  const [userClaudeApiKey, setUserClaudeApiKey] = useState("");
 
   const generateFormCode = async (e: any) => {
     e.preventDefault();

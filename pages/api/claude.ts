@@ -60,15 +60,13 @@ const generateFormCode = async (
 
 const convertResponseFromClaudeToJSON = (responseMarkdown: string) => {
   try {
-    console.log("msg from claude ", responseMarkdown);
     const jsonStart = responseMarkdown.indexOf("```json\n") + 8; // Find the start of the JSON data
     const jsonEnd = responseMarkdown.lastIndexOf("```"); // Find the end of the JSON data
     const jsonString = responseMarkdown.slice(jsonStart, jsonEnd); // Extract the JSON data
 
     const responseJson = JSON.parse(jsonString);
-    console.log("valid json", responseJson);
     return responseJson;
   } catch (error) {
-    throw new Error("Failed to parse JSON from Claude", error);
+    throw new Error("Failed to parse JSON from Claude", error as any);
   }
 };
