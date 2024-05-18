@@ -41,7 +41,6 @@ const Home: NextPage = () => {
     }
 
     const generatedCode = await response.json();
-    console.log("generatedCode", generatedCode);
     setGeneratedFormCode(generatedCode);
     setLoading(false);
   };
