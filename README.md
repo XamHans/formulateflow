@@ -1,5 +1,9 @@
 # MultiStepForm Generator - FormulateFlow
 
+## Video Showcase:
+
+https://www.veed.io/view/97572892-452b-44f6-a7d2-6bf743ae0846?panel=share
+
 Ever wrestle with clunky multi-step forms in React? ‍
 
 I know I did. That's why I built this open-source project: to streamline the process and make creating multi-step forms in Nextjs applications a breeze.
