@@ -1,5 +1,5 @@
 import Editor, { useMonaco } from "@monaco-editor/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Tabs,
   TabsContent,
@@ -13,44 +13,19 @@ export interface EditorInstance {
   content: string;
 }
 
-// export interface MonacoEditorWithTabsProps {
-//   generatedFormCode: EditorInstance[];
-// }
+export interface MonacoEditorWithTabsProps {
+  generatedFormCode: EditorInstance[];
+}
 
-const MonacoEditorWithTabs: React.FC = () => {
+const MonacoEditorWithTabs: React.FC<MonacoEditorWithTabsProps> = ({
+  generatedFormCode,
+}) => {
   const monaco = useMonaco();
-  const [editorInstances, setEditorInstances] = useState([
-    {
-      id: 0,
-      label: "store.ts",
-      content:
-        "import { create } from 'zustand';\n\ninterface Onboa…tStep: (step) => set({ currentStep: step }),\n}));",
-    },
+  const [editorInstances, setEditorInstances] = useState([]);
 
-    {
-      id: 1,
-      label: "WizardWrapper.tsx",
-      content:
-        "import React from 'react';\nimport { useOnboardingS…rStep()}</div>;\n};\n\nexport default WizardWrapper;",
-    },
-
-    {
-      id: 2,
-      label: "WizardPage.tsx",
-      content:
-        "import React from 'react';\nimport { useForm } from…>\n    </form>\n  );\n};\n\nexport default WizardPage;",
-    },
-    {
-      id: 3,
-      label: "WizardPage.tsx",
-      content:
-        "import React from 'react';\nimport { useForm } from…>\n    </form>\n  );\n};\n\nexport default WizardPage;",
-    },
-  ]);
-
-  // useEffect(() => {
-  //   setEditorInstances(generatedFormCode);
-  // }, [generatedFormCode]);
+  useEffect(() => {
+    setEditorInstances(generatedFormCode);
+  }, [generatedFormCode]);
 
   return (
     <div className="w-full">

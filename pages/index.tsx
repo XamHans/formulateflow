@@ -17,6 +17,8 @@ const Home: NextPage = () => {
     "Create me a form that captures users firstname, lastname and email. On the second page capture the email and profession."
   );
 
+  const [userClaudeApiKey, setUserClaudeApiKey] = useState<String>("");
+
   const generateFormCode = async (e: any) => {
     e.preventDefault();
 
@@ -29,15 +31,17 @@ const Home: NextPage = () => {
       },
       body: JSON.stringify({
         userInput: userInput,
+        userClaudeApiKey: userClaudeApiKey,
       }),
     });
 
     if (!response.ok) {
+      console.error(response);
       throw new Error(response.statusText);
     }
 
     const generatedCode = await response.json();
-
+    console.log("generatedCode", generatedCode);
     setGeneratedFormCode(generatedCode);
     setLoading(false);
   };
@@ -52,7 +56,7 @@ const Home: NextPage = () => {
       <Header />
       <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
         <p className="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out">
-          shadcn + zod + zustand + react-hook-form
+          nextjs14 + shadcn + zod + zustand + react-hook-form
         </p>
         <h1 className="sm:text-6xl text-4xl max-w-[708px] font-bold text-slate-900">
           Generate your Multi-Page Form form in seconds
@@ -83,6 +87,27 @@ const Home: NextPage = () => {
             }
           />
 
+          <div className="flex  mb-5 items-center space-x-3">
+            <Image src="/2-black.png" width={30} height={30} alt="1 icon" />
+            <p className="text-left font-medium w-full">
+              Paste in your CLAUDE API Key
+            </p>
+          </div>
+          <div className="block">
+            <input
+              type="text"
+              className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
+              placeholder="sk-xxxxxx"
+              value={userClaudeApiKey}
+              onChange={(e) => setUserClaudeApiKey(e.target.value)}
+            />
+            <label className="text-xs">
+              Your API key will not be stored. It is only sent to the backend to
+              fulfill the Claude API key request and is not retained
+              post-request.
+            </label>{" "}
+          </div>
+
           {!loading && (
             <button
               className="bg-black rounded-xl text-white font-medium px-4 py-2 sm:mt-10 mt-8 hover:bg-black/80 w-full"
@@ -103,7 +128,7 @@ const Home: NextPage = () => {
         <hr className="h-px bg-gray-700 border-1 dark:bg-gray-700" />
 
         <div className="py-2 mt-8 flex space-y-4 w-full">
-          <MonacoEditorWithTabs />
+          <MonacoEditorWithTabs generatedFormCode={generatedFormCode} />
         </div>
       </main>
       <Footer />

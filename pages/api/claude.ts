@@ -8,27 +8,35 @@ import type { NextApiRequest, NextApiResponse } from "next";
 // export const config = {
 //   runtime: "edge",
 // };
-const anthropic = new Anthropic({
-  apiKey: process.env.CLAUDE_API_KEY, // defaults to process.env["ANTHROPIC_API_KEY"]
-});
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const payload = req.body;
-  const { userInput } = payload;
+  const { userInput, userClaudeApiKey } = payload;
 
   if (!userInput) {
     return new Response("No userInput in the request", { status: 400 });
   }
 
-  const generatedCode = await generateFormCode(userInput);
+  // if (!userClaudeApiKey) {
+  //   userClaudeApiKey
+  //   return new Response("No userClaudeApiKey in the request", { status: 400 });
+  // }
+
+  const generatedCode = await generateFormCode(userInput, userClaudeApiKey);
 
   return res.status(200).json(generatedCode);
 }
 
-const generateFormCode = async (userInput: string) => {
+const generateFormCode = async (
+  userInput: string,
+  userClaudeApiKey: string
+) => {
+  const anthropic = new Anthropic({
+    apiKey: process.env.CLAUDE_API_KEY! ?? userClaudeApiKey,
+  });
   const msg = await anthropic.messages.create({
     model: "claude-3-sonnet-20240229",
     max_tokens: 4000,

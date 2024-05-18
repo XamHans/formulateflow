@@ -2,9 +2,9 @@
 
 Ever wrestle with clunky multi-step forms in React? ‍
 
-I know I did. That's why I built this open-source project: to streamline the process and make creating multi-step forms in React applications a breeze.
+I know I did. That's why I built this open-source project: to streamline the process and make creating multi-step forms in Nextjs applications a breeze.
 
-I have fine-tuned an OpenAI assistant to understand the specific needs of multi-step forms within this tech stack. Need to quickly build a form structure? The assistant can help you generate the code using your desired libraries!
+I have fine-tuned Claude to understand the specific needs of multi-step forms within this tech stack.
 
 ## Tech Stack
 
@@ -26,14 +26,12 @@ git clone https://github.com/XamHans/formulateflow
 cd formulateflow
 ```
 
-Create the .env file:
+Rename the .env.example to .env and place your claude api key
 
 ```
-OPENAI_API_KEY=""
-ASSISTANT_ID=""
-```
+CLAUDE_API_KEY="<API_KEY>"
 
-Enter your API key and your assistant that is responsible for generatin the code
+```
 
 ## Acknowledgments
 
